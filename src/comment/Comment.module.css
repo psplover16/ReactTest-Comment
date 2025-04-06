@@ -1,0 +1,10 @@
+.text-red{
+    color: red;
+}
+
+.flex {
+    display: flex;
+}
+.gap-1 {
+    gap: 4px;
+}
