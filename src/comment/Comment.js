@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import useBtnType from './customUse/btnType'
 import { useDispatch, useSelector } from 'react-redux';
 import { increment, decrement, setCount } from '../store/modules/countStore'
+import { setList, fetchList } from '../store/modules/commentList'
 
 function Comment({ params, children }) {
     // useState 的 set必須用全新的值，不能改就值
@@ -75,16 +76,19 @@ function Comment({ params, children }) {
     }
 
     const { count } = useSelector(state => state.counter);
+    const { list } = useSelector(state => state.comment);
     const dispatch = useDispatch();
 
     useEffect(() => {
         async function getOldComment() {
             const { data } = await axios.get('http://localhost:3000/datas');
-            console.log(data);
             setAllCommentData(data);
+            // dispatch(setList(data));
         }
         getOldComment();
-    }, [setAllCommentData]);
+        dispatch(fetchList('http://localhost:3000/datas'))
+        console.log(list);
+    }, []);
 
     return (
         <div>
@@ -100,19 +104,6 @@ function Comment({ params, children }) {
                 <div>
                     <CustomBtn clickHandler={sendComment} params="發布評論" />
                 </div>
-            </div>
-            <hr />
-            <div>
-                redux
-                <div>
-                    設置模塊，store與 index.js
-                </div>
-            </div>
-            <div>
-                <button type="button" onClick={() => dispatch(decrement())}>-</button>
-                {count}
-                <button type="button" onClick={() => dispatch(increment())}>+</button>
-                <button type="button" onClick={() => dispatch(setCount(0))}>設置成0</button>
             </div>
             <hr />
             <div className={`${styles.flex} ${styles["gap-1"]}`}>
@@ -145,8 +136,42 @@ function Comment({ params, children }) {
                     }</tbody>
 
             </table>
+            <hr />
+            <div>
+                redux
+                <div>
+                    設置模塊，store與 index.js
+                </div>
+                目前只有撈資料
+            </div>
+            <div>
+                <button type="button" onClick={() => dispatch(decrement())}>-</button>
+                {count}
+                <button type="button" onClick={() => dispatch(increment())}>+</button>
+                <button type="button" onClick={() => dispatch(setCount(0))}>設置成0</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>評論內容</td>
+                        <td>發布者</td>
+                        <td>按讚數</td>
+                        <td>發布日期</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        list.map((val, key) => (
+                            <tr key={key}>
+                                <td>{val.comment}</td>
+                                <td>{val.publishName}</td>
+                                <td>{val.like}</td>
+                                <td>{val.date}</td>
+                            </tr>
+                        ))
+                    }</tbody>
 
-
+            </table>
         </div>
     );
 }

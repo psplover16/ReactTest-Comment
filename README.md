@@ -1,5 +1,5 @@
 npx json-server db.json
-
+npx json-server db.json --port 3123
 
 npx create-react-app 專案名稱
 npm start
