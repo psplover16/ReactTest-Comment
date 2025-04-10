@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import Comment from "./comment/Comment";
 
-function App() {
+export default function NotFound() {
   return (
-    <div className="App">
+    <div>
+      <div>404</div>
       <div>
         <Link to="/login">to="/login"</Link>
       </div>
@@ -18,18 +18,6 @@ function App() {
           到登入頁，網址為/name/王大同/男性，並攜帶參數
         </Link>
       </div>
-      <div>
-        <Link to="/login/王大同/男姓/board?name=456">
-          login/王大同/男姓/board?name=456
-        </Link>
-      </div>
-      {/*  */}
-      <div>這是APP</div>
-      <Comment params="我是params">
-        <div className="text-red">我是children</div>
-      </Comment>
     </div>
   );
 }
-
-export default App;

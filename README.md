@@ -22,7 +22,7 @@ store > index.js == module/ > channelStore.js === counterStore.js
 
 redux
 // 1.安裝
-npm i @reduxjs/toolkit react-reduct
+npm i @reduxjs/toolkit react-redux
 // 2. 設定 reducer
 import { createSlice } from '@reduxjs/toolkit';
 const conteStore = createSlice({
